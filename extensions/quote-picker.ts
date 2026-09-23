@@ -1,6 +1,6 @@
 import { CustomEditor, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { matchesKey, truncateToWidth } from "@earendil-works/pi-tui";
-import { quote, replaceLine, splitUnits } from "./units.ts";
+import { assistantText, quote, replaceLine, splitUnits } from "./units.ts";
 
 function insideFence(lines: string[]): boolean {
   let fence = "";
@@ -125,16 +125,7 @@ export default function (pi: ExtensionAPI) {
         if (!current.startsWith(">")) suppressed = false;
         const open = !suppressed && canPick(editor);
         if (open && !active) {
-          const branch = ctx.sessionManager.getBranch();
-          const lastUser = branch.findLastIndex(
-            (entry) => entry.type === "message" && entry.message.role === "user",
-          );
-          const source = branch.slice(lastUser + 1).flatMap((entry) =>
-            entry.type === "message" && entry.message.role === "assistant"
-              ? entry.message.content.filter((part) => part.type === "text").map((part) => part.text)
-              : [],
-          );
-          items = splitUnits(source.join("\n\n"));
+          items = splitUnits(assistantText(ctx.sessionManager.getBranch()));
           selected = 0;
         }
         active = open && items.length > 0;

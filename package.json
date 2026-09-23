@@ -1,7 +1,7 @@
 {
   "name": "pi-quote-picker",
-  "version": "0.1.0",
-  "description": "Quote paragraphs from the latest assistant response in Pi's editor",
+  "version": "0.1.1",
+  "description": "Quote text from assistant responses in Pi's active session branch",
   "type": "module",
   "files": [
     "extensions",

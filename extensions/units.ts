@@ -1,3 +1,13 @@
+import type { SessionEntry } from "@earendil-works/pi-coding-agent";
+
+export function assistantText(entries: SessionEntry[]): string {
+  return entries.flatMap((entry) =>
+    entry.type === "message" && entry.message.role === "assistant"
+      ? entry.message.content.filter((part) => part.type === "text").map((part) => part.text)
+      : [],
+  ).join("\n\n");
+}
+
 export function splitUnits(markdown: string): string[] {
   const lines = markdown.split("\n");
   const units: string[] = [];
@@ -31,6 +41,17 @@ export function splitUnits(markdown: string): string[] {
       continue;
     }
     if (!line.trim()) {
+      flush();
+      continue;
+    }
+    if (/^\s{0,3}#{1,6}(?:\s|$)/.test(line)) {
+      flush();
+      block.push(line);
+      flush();
+      continue;
+    }
+    if (/^\s{0,3}(?:=+|-+)\s*$/.test(line) && block.length) {
+      block.push(line);
       flush();
       continue;
     }
