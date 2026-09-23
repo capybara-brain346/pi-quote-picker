@@ -109,7 +109,7 @@ export default function (pi: ExtensionAPI) {
             const { line } = editor.getCursor();
             const lines = editor.getLines();
             const text = matchesKey(data, "alt+enter") ? found[selected]! : quote(found[selected]!);
-            editor.setText(replaceLine(lines, line, text));
+            editor.setText(replaceLine(lines, line, `${text}\n\n`));
             // setText moves to the end; restore the cursor before the trailing draft.
             const trailing = lines.slice(line + 1).join("\n");
             for (let i = 0; i < (line < lines.length - 1 ? trailing.length + 1 : 0); i++)
