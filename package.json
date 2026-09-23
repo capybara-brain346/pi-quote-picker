@@ -1,0 +1,34 @@
+{
+  "name": "pi-quote-picker",
+  "version": "0.1.0",
+  "description": "Quote paragraphs from the latest assistant response in Pi's editor",
+  "type": "module",
+  "files": [
+    "extensions",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "pi-package"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/capybara-brain346/pi-quote-picker.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/units.test.mjs"
+  },
+  "devDependencies": {
+    "jiti": "^2.7.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions/quote-picker.ts"
+    ]
+  }
+}
